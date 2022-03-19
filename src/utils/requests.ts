@@ -1,4 +1,4 @@
-const API_KEY = process.env.TMDB_API_KEY_V4;
+const API_KEY = process.env.REACT_APP_TMDB_API_KEY_V3;
 
 export interface MovieRequestEndpoints {
   fetchTrending: string;

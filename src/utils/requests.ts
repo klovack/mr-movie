@@ -1,8 +1,13 @@
+import { Network } from "../types";
+
 const API_KEY = process.env.REACT_APP_TMDB_API_KEY_V3;
 
 export interface MovieRequestEndpoints {
   fetchTrending: string;
   fetchNetflixOriginals: string;
+  fetchAmazonOriginals: string;
+  fetchDisneyPlusOriginals: string;
+  fetchAppleTVOriginals: string;
   fetchTopRated: string;
   fetchActionMovies: string;
   fetchComedyMovies: string;
@@ -14,7 +19,10 @@ export interface MovieRequestEndpoints {
 
 const requests: MovieRequestEndpoints = {
   fetchTrending: `/trending/all/week?api_key=${API_KEY}&language=en-US`,
-  fetchNetflixOriginals: `/discover/tv?api_key=${API_KEY}&with_networks=213`,
+  fetchNetflixOriginals: `/discover/tv?api_key=${API_KEY}&with_networks=${Network.NETFLIX}`,
+  fetchAmazonOriginals: `/discover/tv?api_key=${API_KEY}&with_networks=${Network.AMAZON}`,
+  fetchDisneyPlusOriginals: `/discover/tv?api_key=${API_KEY}&with_networks=${Network.DISNEY_PLUS}`,
+  fetchAppleTVOriginals: `/discover/tv?api_key=${API_KEY}&with_networks=${Network.APPLE_TV}`,
   fetchTopRated: `/movie/top_rated?api_key=${API_KEY}&language=en-US`,
   fetchActionMovies: `/discover/movie?api_key=${API_KEY}&with_genres=28`,
   fetchComedyMovies: `/discover/movie?api_key=${API_KEY}&with_genres=35`,

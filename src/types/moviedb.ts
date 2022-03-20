@@ -107,3 +107,24 @@ export enum Genre {
   WAR_AND_POLITICS = 10768,
   TV_MOVIE = 10770,
 }
+
+export const Networks = {
+  1024: "Amazon",
+  213: "Netflix",
+  2739: "Disney+",
+  2552: "Apple TV+",
+};
+
+export const NetworkUrls = {
+  1024: "https://www.primevideo.com/",
+  213: "https://www.netflix.com/",
+  2739: "https://www.disneyplus.com",
+  2552: "https://tv.apple.com/",
+};
+
+export enum Network {
+  AMAZON = 1024,
+  NETFLIX = 213,
+  DISNEY_PLUS = 2739,
+  APPLE_TV = 2552,
+}

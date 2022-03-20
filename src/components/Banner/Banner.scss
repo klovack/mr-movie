@@ -3,6 +3,7 @@
   object-fit: contain;
   height: 35.25vw;
   position: relative;
+  margin-bottom: 1rem;
 
   &__contents {
     margin-left: 50px;
@@ -56,13 +57,13 @@
 
     &:hover {
       color: #000;
-      background-color: #e6e6e6aa;
+      background-color: #e6e6e688;
       transition: all 0.2s;
     }
   }
 
   &__fade-bottom {
-    height: 5rem;
+    height: 5.5rem;
     width: 100%;
     background-image: linear-gradient(180deg, transparent, #1414145b, #141414);
     position: absolute;

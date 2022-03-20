@@ -3,11 +3,7 @@ import React from "react";
 import { Genres, getMovieOrTVName, MovieResult, TVResult } from "../../types";
 import "./Row.scss";
 
-function RowPosterOverlay({
-  isShowingOverview,
-  movie,
-  isTV,
-}: RowPosterOverlayProps) {
+function RowPosterOverlay({ isShowingOverview, movie }: RowPosterOverlayProps) {
   return (
     <div
       className={classNames("row__poster__overview", {
@@ -15,7 +11,7 @@ function RowPosterOverlay({
       })}
     >
       <h4 className="row__poster__overview__title">
-        {getMovieOrTVName(movie, isTV)}
+        {getMovieOrTVName(movie)}
       </h4>
       <p className="row__poster__overview__genres">
         {movie.genre_ids.map((genreId) => {
@@ -33,7 +29,6 @@ function RowPosterOverlay({
 export interface RowPosterOverlayProps {
   isShowingOverview?: boolean;
   movie: TVResult | MovieResult;
-  isTV?: boolean;
 }
 
 export default RowPosterOverlay;

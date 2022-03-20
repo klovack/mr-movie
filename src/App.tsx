@@ -1,13 +1,14 @@
 import React from "react";
 import "./App.scss";
 import Banner from "./components/Banner/Banner";
+import Nav from "./components/Nav/Nav";
 import Row from "./components/Row/Row";
 import requests from "./utils/requests";
 
 function App() {
   return (
     <div className="App">
-      {/* NAV */}
+      <Nav />
 
       <Banner />
 

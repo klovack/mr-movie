@@ -38,7 +38,12 @@ function Row({ title, url, isFeatured, displayLimit }: RowProps) {
 
       <div className="row__posters">
         {movies.map((movie: MovieResult | TVResult) => (
-          <RowPoster movie={movie} isTV={isTV} isFeatured={isFeatured} />
+          <RowPoster
+            key={movie.id}
+            movie={movie}
+            isTV={isTV}
+            isFeatured={isFeatured}
+          />
         ))}
       </div>
     </div>

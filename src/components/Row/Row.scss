@@ -112,8 +112,9 @@ $posterFeatureWidth: 166px;
 }
 
 .no-poster {
-  background-color: gray;
+  background-color: darkslategrey;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 5px;
 }

@@ -1,9 +1,6 @@
-import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import {
   DiscoverResponse,
-  GenreMap,
-  getMovieOrTVName,
   isListTVResult,
   MovieResult,
   TVResult,

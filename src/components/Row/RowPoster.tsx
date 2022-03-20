@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React, { useState } from "react";
-import { GenreMap, getMovieOrTVName, MovieResult, TVResult } from "../../types";
+import { Genres, getMovieOrTVName, MovieResult, TVResult } from "../../types";
 import "./Row.scss";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
@@ -43,7 +43,7 @@ function RowPoster({
             {movie.genre_ids.map((genreId) => {
               return (
                 <span className="row__poster__overview__genres__item">
-                  {GenreMap[genreId]}{" "}
+                  {Genres[genreId]}
                 </span>
               );
             })}

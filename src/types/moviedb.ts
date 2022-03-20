@@ -48,7 +48,7 @@ export const getMovieOrTVName = (
   return isTV ? (result as TVResult).name : (result as MovieResult).title;
 };
 
-export const GenreMap = {
+export const Genres = {
   28: "Action",
   12: "Adventure",
   16: "Animation",
@@ -77,3 +77,33 @@ export const GenreMap = {
   10767: "Talk",
   10768: "War & Politics",
 };
+
+export enum Genre {
+  ADVENTURE = 12,
+  FANTASY = 14,
+  ANIMATION = 16,
+  DRAMA = 18,
+  HORROR = 27,
+  ACTION = 28,
+  COMEDY = 35,
+  HISTORY = 36,
+  WESTERN = 37,
+  THRILLER = 53,
+  CRIME = 80,
+  DOCUMENTARY = 99,
+  SCIENCE_FICTION = 878,
+  MYSTERY = 9648,
+  MUSIC = 10402,
+  ROMANCE = 10749,
+  FAMILY = 10751,
+  WAR = 10752,
+  ACTION_AND_ADVENTURE = 10759,
+  KIDS = 10762,
+  NEWS = 10763,
+  REALITY = 10764,
+  SCIFI_AND_FANTASY = 10765,
+  SOAP = 10766,
+  TALK = 10767,
+  WAR_AND_POLITICS = 10768,
+  TV_MOVIE = 10770,
+}

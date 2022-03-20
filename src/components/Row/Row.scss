@@ -1,3 +1,5 @@
+$posterWidth: 250px;
+
 .row {
   &__posters {
     display: flex;
@@ -15,9 +17,11 @@
     width: 100%;
     object-fit: contain;
     max-height: 250px;
-    width: 166px;
+    width: $posterWidth;
     transition: transform 450ms;
     margin-right: 15px;
+
+    border-radius: 5px;
 
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
 
@@ -26,16 +30,22 @@
     }
 
     &:hover {
-      transform: scale(1.1);
+      transform: scale(1.08);
       cursor: pointer;
     }
 
     &__title {
-      width: 166px;
+      width: $posterWidth;
       text-align: center;
       font-weight: bold;
       font-size: 24px;
       color: white;
+    }
+
+    &.featured {
+      &:hover {
+        transform: scale(1.1);
+      }
     }
   }
 }

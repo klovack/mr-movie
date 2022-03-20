@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import {
   DiscoverResponse,
@@ -11,7 +12,7 @@ import "./Row.scss";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 
-function Row({ title, url }: RowProps) {
+function Row({ title, url, isFeatured, displayLimit }: RowProps) {
   const [movies, setMovies] = useState<MovieResult[] | TVResult[]>([]);
   const [isTV, setIsTV] = useState(false);
 
@@ -34,6 +35,10 @@ function Row({ title, url }: RowProps) {
     setIsTV(isListTVResult(movies));
   }, [movies]);
 
+  const rowPosterFeaturedClass = classNames("row__poster", {
+    featured: isFeatured,
+  });
+
   return (
     <div className="row">
       <h2>{title}</h2>
@@ -43,9 +48,11 @@ function Row({ title, url }: RowProps) {
           if (movie.poster_path) {
             return (
               <img
-                className="row__poster"
+                className={rowPosterFeaturedClass}
                 key={movie.id}
-                src={`${IMAGE_URL}${movie.poster_path}`}
+                src={`${IMAGE_URL}${
+                  isFeatured ? movie.poster_path : movie.backdrop_path
+                }`}
                 alt={getMovieOrTVName(movie, isTV)}
               />
             );
@@ -69,4 +76,6 @@ export default Row;
 export interface RowProps {
   title: string;
   url: string;
+  isFeatured?: boolean;
+  displayLimit?: number;
 }

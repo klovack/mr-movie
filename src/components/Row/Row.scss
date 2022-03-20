@@ -2,6 +2,14 @@ $posterWidth: 250px;
 $posterFeatureWidth: 166px;
 
 .row {
+  margin-left: 10px;
+
+  &__title {
+    margin-left: 20px;
+    font-size: x-large;
+    font-weight: bold;
+  }
+
   &__posters {
     position: relative;
     display: flex;
@@ -9,6 +17,8 @@ $posterFeatureWidth: 166px;
     overflow-y: hidden;
     overflow-x: scroll;
     padding: 20px 20px 36px 20px;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
 
     &::-webkit-scrollbar {
       display: none;
@@ -16,6 +26,7 @@ $posterFeatureWidth: 166px;
   }
 
   &__poster {
+    scroll-snap-align: end;
     margin-right: 15px;
     transition: transform 450ms;
     &:hover {

@@ -10,10 +10,26 @@
   position: fixed;
   top: 0;
   z-index: 1;
-  background-color: rgba(0, 0, 0, 0.3);
+  background: rgb(20, 20, 20);
+  background: linear-gradient(
+    180deg,
+    rgba(20, 20, 20, 1) 0%,
+    rgba(20, 20, 20, 0) 100%
+  );
+
+  transition: background 200ms ease-in;
 
   &__logo {
     height: 24px;
     object-fit: contain;
+    transition: transform 150ms;
+
+    &:hover {
+      transform: scale(1.08);
+    }
+  }
+
+  &__black-bg {
+    background-color: rgb(20, 20, 20);
   }
 }

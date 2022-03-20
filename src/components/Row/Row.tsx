@@ -3,11 +3,11 @@ import {
   DiscoverResponse,
   getMovieOrTVName,
   isListTVResult,
-  isTVResult,
   MovieResult,
   TVResult,
 } from "../../types";
 import httpClient from "../../utils/axios";
+import "./Row.scss";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 
@@ -39,22 +39,25 @@ function Row({ title, url }: RowProps) {
       <h2>{title}</h2>
 
       <div className="row__posters">
-        {movies.map((m: MovieResult | TVResult) => {
-          if (m.poster_path) {
+        {movies.map((movie: MovieResult | TVResult) => {
+          if (movie.poster_path) {
             return (
               <img
-                key={m.id}
-                src={`${IMAGE_URL}${m.poster_path}`}
-                alt={getMovieOrTVName(m, isTV)}
+                className="row__poster"
+                key={movie.id}
+                src={`${IMAGE_URL}${movie.poster_path}`}
+                alt={getMovieOrTVName(movie, isTV)}
               />
             );
           }
 
-          if (isTV) {
-            return <p key={m.id}>{(m as TVResult).name}</p>;
-          }
-
-          return <p key={m.id}>{(m as MovieResult).title}</p>;
+          return (
+            <div key={movie.id} className="row__poster no-poster">
+              <p className="row__poster__title">
+                {getMovieOrTVName(movie, isTV)}
+              </p>
+            </div>
+          );
         })}
       </div>
     </div>

@@ -1,7 +1,9 @@
 $posterWidth: 250px;
+$posterFeatureWidth: 166px;
 
 .row {
   &__posters {
+    position: relative;
     display: flex;
     flex-direction: row;
     overflow-y: hidden;
@@ -14,24 +16,27 @@ $posterWidth: 250px;
   }
 
   &__poster {
-    width: 100%;
-    object-fit: contain;
-    max-height: 250px;
-    width: $posterWidth;
-    transition: transform 450ms;
     margin-right: 15px;
-
-    border-radius: 5px;
-
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
-
-    &:last-child {
-      margin-right: 0;
+    transition: transform 450ms;
+    &:hover {
+      transform: scale(1.1);
+      cursor: pointer;
     }
 
-    &:hover {
-      transform: scale(1.08);
-      cursor: pointer;
+    &__image {
+      width: 100%;
+      object-fit: contain;
+      max-height: 250px;
+      width: $posterWidth;
+      border-radius: 5px;
+      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &.featured {
+        width: $posterFeatureWidth;
+      }
     }
 
     &__title {
@@ -42,9 +47,53 @@ $posterWidth: 250px;
       color: white;
     }
 
-    &.featured {
-      &:hover {
-        transform: scale(1.1);
+    &__overview {
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.5);
+      bottom: 2px;
+      width: 100%;
+      color: white;
+      box-sizing: border-box;
+      padding: 10px;
+      border-radius: 0 0 5px 5px;
+
+      &.hidden {
+        visibility: hidden;
+      }
+
+      > * {
+        width: 100%;
+        word-wrap: break-word;
+      }
+
+      &__title {
+        font-weight: bold;
+        font-size: large;
+        line-height: 150%;
+        margin-bottom: 10px;
+      }
+
+      &__genres {
+        font-size: small;
+
+        &__item {
+          margin-right: 5px;
+
+          &::after {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background-color: rgba(245, 245, 245, 0.75);
+            position: relative;
+            top: -1px;
+          }
+
+          &:last-child::after {
+            display: none;
+          }
+        }
       }
     }
   }

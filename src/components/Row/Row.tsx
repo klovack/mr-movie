@@ -2,6 +2,7 @@ import classNames from "classnames";
 import React, { useEffect, useState } from "react";
 import {
   DiscoverResponse,
+  GenreMap,
   getMovieOrTVName,
   isListTVResult,
   MovieResult,
@@ -9,8 +10,7 @@ import {
 } from "../../types";
 import httpClient from "../../utils/axios";
 import "./Row.scss";
-
-const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
+import RowPoster from "./RowPoster";
 
 function Row({ title, url, isFeatured, displayLimit }: RowProps) {
   const [movies, setMovies] = useState<MovieResult[] | TVResult[]>([]);
@@ -35,37 +35,14 @@ function Row({ title, url, isFeatured, displayLimit }: RowProps) {
     setIsTV(isListTVResult(movies));
   }, [movies]);
 
-  const rowPosterFeaturedClass = classNames("row__poster", {
-    featured: isFeatured,
-  });
-
   return (
     <div className="row">
       <h2>{title}</h2>
 
       <div className="row__posters">
-        {movies.map((movie: MovieResult | TVResult) => {
-          if (movie.poster_path) {
-            return (
-              <img
-                className={rowPosterFeaturedClass}
-                key={movie.id}
-                src={`${IMAGE_URL}${
-                  isFeatured ? movie.poster_path : movie.backdrop_path
-                }`}
-                alt={getMovieOrTVName(movie, isTV)}
-              />
-            );
-          }
-
-          return (
-            <div key={movie.id} className="row__poster no-poster">
-              <p className="row__poster__title">
-                {getMovieOrTVName(movie, isTV)}
-              </p>
-            </div>
-          );
-        })}
+        {movies.map((movie: MovieResult | TVResult) => (
+          <RowPoster movie={movie} isTV={isTV} isFeatured={isFeatured} />
+        ))}
       </div>
     </div>
   );

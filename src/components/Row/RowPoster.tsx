@@ -1,6 +1,8 @@
 import classNames from "classnames";
 import React, { useState } from "react";
+import * as movieTrailer from "movie-trailer";
 import { getMovieOrTVName, MovieResult, TVResult } from "../../types";
+import Trailer from "../Trailer/Trailer";
 import "./Row.scss";
 import RowPosterOverlay from "./RowPosterOverlay";
 
@@ -12,16 +14,33 @@ function RowPoster({
   isTV = false,
 }: RowPosterProps) {
   const [isShowingOverview, setIsShowingOverview] = useState(false);
+  const [movieTrailerId, setMovieTrailerId] = useState("");
 
   const rowPosterFeaturedClass = classNames("row__poster__image", {
     featured: isFeatured,
   });
 
+  const enterOverview = async () => {
+    setIsShowingOverview(true);
+    const movieTrailers = await movieTrailer(null, {
+      id: true,
+      tmdbId: movie.id,
+      apiKey: process.env.REACT_APP_TMDB_API_KEY_V3,
+    });
+
+    console.log(movieTrailers);
+  };
+
+  const exitOverview = () => {
+    setIsShowingOverview(false);
+    setMovieTrailerId("");
+  };
+
   if (movie.backdrop_path || (isFeatured && movie.poster_path)) {
     return (
       <div
-        onMouseEnter={() => setIsShowingOverview(true)}
-        onMouseLeave={() => setIsShowingOverview(false)}
+        onMouseEnter={enterOverview}
+        onMouseLeave={exitOverview}
         className="row__poster"
       >
         <img
@@ -38,12 +57,13 @@ function RowPoster({
 
   return (
     <div
-      onMouseEnter={() => setIsShowingOverview(true)}
-      onMouseLeave={() => setIsShowingOverview(false)}
+      onMouseEnter={enterOverview}
+      onMouseLeave={exitOverview}
       className="row__poster no-poster"
     >
       <p className="row__poster__title">{getMovieOrTVName(movie)}</p>
       <RowPosterOverlay movie={movie} isShowingOverview={isShowingOverview} />
+      {/* <Trailer /> */}
     </div>
   );
 }

@@ -1,8 +1,6 @@
 import classNames from "classnames";
 import React, { useState } from "react";
-import * as movieTrailer from "movie-trailer";
 import { getMovieOrTVName, MovieResult, TVResult } from "../../types";
-import Trailer from "../Trailer/Trailer";
 import "./Row.scss";
 import RowPosterOverlay from "./RowPosterOverlay";
 
@@ -11,10 +9,10 @@ const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 function RowPoster({
   movie,
   isFeatured = false,
-  isTV = false,
+  onMouseEnter,
+  onMouseExit,
 }: RowPosterProps) {
   const [isShowingOverview, setIsShowingOverview] = useState(false);
-  const [movieTrailerId, setMovieTrailerId] = useState("");
 
   const rowPosterFeaturedClass = classNames("row__poster__image", {
     featured: isFeatured,
@@ -22,18 +20,12 @@ function RowPoster({
 
   const enterOverview = async () => {
     setIsShowingOverview(true);
-    const movieTrailers = await movieTrailer(null, {
-      id: true,
-      tmdbId: movie.id,
-      apiKey: process.env.REACT_APP_TMDB_API_KEY_V3,
-    });
-
-    console.log(movieTrailers);
+    onMouseEnter && onMouseEnter();
   };
 
   const exitOverview = () => {
     setIsShowingOverview(false);
-    setMovieTrailerId("");
+    onMouseExit && onMouseExit();
   };
 
   if (movie.backdrop_path || (isFeatured && movie.poster_path)) {
@@ -72,6 +64,8 @@ export interface RowPosterProps {
   movie: MovieResult | TVResult;
   isFeatured?: boolean;
   isTV?: boolean;
+  onMouseEnter?: () => any;
+  onMouseExit?: () => any;
 }
 
 export default RowPoster;

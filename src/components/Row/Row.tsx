@@ -1,6 +1,9 @@
+import { debounce } from "lodash";
 import React, { useEffect, useState } from "react";
+import movieTrailer from "movie-trailer";
 import {
   DiscoverResponse,
+  getMovieOrTVName,
   isListTVResult,
   MovieResult,
   TVResult,
@@ -8,10 +11,14 @@ import {
 import httpClient from "../../utils/axios";
 import "./Row.scss";
 import RowPoster from "./RowPoster";
+import Trailer from "../Trailer/Trailer";
+
+const DEBOUNCE_TIME = 1000;
 
 function Row({ title, url, isFeatured, displayLimit }: RowProps) {
   const [movies, setMovies] = useState<MovieResult[] | TVResult[]>([]);
   const [isTV, setIsTV] = useState(false);
+  const [movieTrailerId, setMovieTrailerId] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -32,8 +39,26 @@ function Row({ title, url, isFeatured, displayLimit }: RowProps) {
     setIsTV(isListTVResult(movies));
   }, [movies]);
 
+  const getMovieTrailer = debounce(async (movie: MovieResult | TVResult) => {
+    const movieTrailerUrl = await movieTrailer(getMovieOrTVName(movie));
+
+    if (!movieTrailerUrl) {
+      console.error("No movie Trailer for this!");
+      return;
+    }
+
+    const urlParams = new URLSearchParams(new URL(movieTrailerUrl).search);
+
+    setMovieTrailerId(urlParams.get("v") ?? "");
+  }, DEBOUNCE_TIME);
+
+  const closeMovieTrailer = debounce(() => {
+    getMovieTrailer.cancel();
+    setMovieTrailerId("");
+  }, DEBOUNCE_TIME);
+
   return (
-    <div className="row">
+    <div onMouseLeave={closeMovieTrailer} className="row">
       <h2 className="row__title">{title}</h2>
 
       <div className="row__posters">
@@ -43,9 +68,14 @@ function Row({ title, url, isFeatured, displayLimit }: RowProps) {
             movie={movie}
             isTV={isTV}
             isFeatured={isFeatured}
+            onMouseEnter={() => {
+              getMovieTrailer(movie);
+            }}
           />
         ))}
       </div>
+
+      {movieTrailerId && <Trailer trailerId={movieTrailerId} />}
     </div>
   );
 }

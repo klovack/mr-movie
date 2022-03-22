@@ -62,6 +62,13 @@
     }
   }
 
+  &__trailer {
+    width: 45%;
+    position: absolute;
+    right: 60px;
+    bottom: 15%;
+  }
+
   &__fade-bottom {
     height: 5.5rem;
     width: 100%;

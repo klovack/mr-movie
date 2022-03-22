@@ -1,7 +1,7 @@
 import React from "react";
 import YouTube, { Options } from "react-youtube";
 
-function Trailer({ trailerId }: TrailerProps) {
+function Trailer({ trailerId, width = "100%", height = "400" }: TrailerProps) {
   const opts: Options = {
     height: "400",
     width: "100%",
@@ -22,6 +22,10 @@ function Trailer({ trailerId }: TrailerProps) {
 
 export interface TrailerProps {
   trailerId: string;
+  /** Default: `100%` */
+  width?: string;
+  /** Default: `400px` */
+  height?: string;
 }
 
 export default Trailer;

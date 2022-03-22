@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
+import movieTrailer from "movie-trailer";
 import { getMovieOrTVName, MovieResult, TVResult } from "../../types";
 import httpClient from "../../utils/axios";
 import requests from "../../utils/requests";
 import "./Banner.scss";
+import Trailer from "../Trailer/Trailer";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/original";
 
 function Banner() {
   const [movie, setMovie] = useState<MovieResult | TVResult | null>(null);
+  const [movieTrailerId, setMovieTrailerId] = useState("");
+  const [isTrailerPlaying, setIsTrailerPlaying] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -35,10 +39,24 @@ function Banner() {
     fetchData();
   }, []);
 
+  const fetchMovie = async (pickedMovie: MovieResult | TVResult) => {
+    const movieTrailerUrl = await movieTrailer(getMovieOrTVName(pickedMovie));
+    if (!movieTrailerUrl) {
+      console.error("No movie Trailer for this!");
+      return;
+    }
+    const urlParams = new URLSearchParams(new URL(movieTrailerUrl).search);
+    setMovieTrailerId(urlParams.get("v") ?? "");
+    setIsTrailerPlaying(true);
+  };
+
   return (
     <>
       {movie && (
         <header
+          onMouseLeave={() => {
+            setIsTrailerPlaying(false);
+          }}
           style={{
             backgroundSize: "cover",
             backgroundImage: `url(
@@ -57,10 +75,22 @@ function Banner() {
 
             {/* Div with 2 buttons */}
             <div className="banner__buttons">
-              <button className="banner__button play">Play</button>
-              <button className="banner__button">More Info</button>
+              {!isTrailerPlaying && (
+                <button
+                  onClick={() => fetchMovie(movie)}
+                  className="banner__button play"
+                >
+                  Play
+                </button>
+              )}
+              {/* <button className="banner__button">More Info</button> To be used later when we have modal box */}
             </div>
           </div>
+          {isTrailerPlaying && (
+            <div className="banner__trailer">
+              <Trailer trailerId={movieTrailerId} />
+            </div>
+          )}
 
           <div className="banner__fade-bottom"></div>
         </header>

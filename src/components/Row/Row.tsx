@@ -13,12 +13,13 @@ import "./Row.scss";
 import RowPoster from "./RowPoster";
 import Trailer from "../Trailer/Trailer";
 
-const DEBOUNCE_TIME = 1000;
+const DEBOUNCE_TIME = 1500;
 
 function Row({ title, url, isFeatured, displayLimit }: RowProps) {
   const [movies, setMovies] = useState<MovieResult[] | TVResult[]>([]);
   const [isTV, setIsTV] = useState(false);
   const [movieTrailerId, setMovieTrailerId] = useState("");
+  const [isTrailerOpen, setIsTrailerOpen] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -50,12 +51,14 @@ function Row({ title, url, isFeatured, displayLimit }: RowProps) {
     const urlParams = new URLSearchParams(new URL(movieTrailerUrl).search);
 
     setMovieTrailerId(urlParams.get("v") ?? "");
+    setIsTrailerOpen(true);
   }, DEBOUNCE_TIME);
 
   const closeMovieTrailer = debounce(() => {
-    getMovieTrailer.cancel();
+    setIsTrailerOpen(false);
     setMovieTrailerId("");
-  }, DEBOUNCE_TIME);
+    getMovieTrailer.cancel();
+  }, DEBOUNCE_TIME / 15);
 
   return (
     <div onMouseLeave={closeMovieTrailer} className="row">
@@ -71,11 +74,19 @@ function Row({ title, url, isFeatured, displayLimit }: RowProps) {
             onMouseEnter={() => {
               getMovieTrailer(movie);
             }}
+            onClick={() => {
+              setIsTrailerOpen(true);
+              getMovieTrailer(movie);
+            }}
           />
         ))}
       </div>
 
-      {movieTrailerId && <Trailer trailerId={movieTrailerId} />}
+      {isTrailerOpen && movieTrailerId && (
+        <div className="row__trailer">
+          <Trailer trailerId={movieTrailerId} />
+        </div>
+      )}
     </div>
   );
 }

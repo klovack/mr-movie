@@ -1,3 +1,5 @@
+@import "../../vars";
+
 $posterWidth: 250px;
 $posterFeatureWidth: 166px;
 
@@ -41,7 +43,7 @@ $posterFeatureWidth: 166px;
       max-height: 250px;
       width: $posterWidth;
       border-radius: 5px;
-      box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+      box-shadow: $shadow;
       &:last-child {
         margin-right: 0;
       }
@@ -107,6 +109,26 @@ $posterFeatureWidth: 166px;
             display: none;
           }
         }
+      }
+    }
+  }
+
+  &__trailer {
+    width: 50%;
+    padding: 20px;
+    margin: 0 auto;
+    box-shadow: $shadow;
+    object-fit: contain;
+    border-radius: 8px;
+    background-color: #181818;
+
+    @media screen and (max-width: $breakpointTablet) {
+      width: 88%;
+    }
+
+    iframe {
+      @media screen and (max-width: $breakpointPhone) {
+        height: 200px;
       }
     }
   }

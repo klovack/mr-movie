@@ -11,7 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: npm ci && npm run build
+      - run: |
+          touch .env
+          echo REACT_APP_TMDB_API_KEY_V3=$REACT_APP_TMDB_API_KEY_V3 >> .env
+          npm ci && npm run build
+        env:
+          REACT_APP_TMDB_API_KEY_V3: ${{ secrets.REACT_APP_TMDB_API_KEY_V3 }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'

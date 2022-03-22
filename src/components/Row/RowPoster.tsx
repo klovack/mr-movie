@@ -11,6 +11,7 @@ function RowPoster({
   isFeatured = false,
   onMouseEnter,
   onMouseExit,
+  onClick,
 }: RowPosterProps) {
   const [isShowingOverview, setIsShowingOverview] = useState(false);
 
@@ -33,6 +34,7 @@ function RowPoster({
       <div
         onMouseEnter={enterOverview}
         onMouseLeave={exitOverview}
+        onClick={onClick}
         className="row__poster"
       >
         <img
@@ -66,6 +68,7 @@ export interface RowPosterProps {
   isTV?: boolean;
   onMouseEnter?: () => any;
   onMouseExit?: () => any;
+  onClick?: () => any;
 }
 
 export default RowPoster;

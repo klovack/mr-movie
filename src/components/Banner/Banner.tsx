@@ -83,7 +83,7 @@ function Banner() {
                   Play
                 </button>
               )}
-              <button className="banner__button">More Info</button>
+              {/* <button className="banner__button">More Info</button> To be used later when we have modal box */}
             </div>
           </div>
           {isTrailerPlaying && (

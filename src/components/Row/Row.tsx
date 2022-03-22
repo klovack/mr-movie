@@ -82,7 +82,7 @@ function Row({ title, url, isFeatured, displayLimit }: RowProps) {
         ))}
       </div>
 
-      {isTrailerOpen && (
+      {isTrailerOpen && movieTrailerId && (
         <div className="row__trailer">
           <Trailer trailerId={movieTrailerId} />
         </div>

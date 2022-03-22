@@ -1,6 +1,7 @@
+@import "../../vars";
+
 $posterWidth: 250px;
 $posterFeatureWidth: 166px;
-$shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
 
 .row {
   margin-left: 10px;
@@ -120,6 +121,16 @@ $shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
     object-fit: contain;
     border-radius: 8px;
     background-color: #181818;
+
+    @media screen and (max-width: $breakpointTablet) {
+      width: 88%;
+    }
+
+    iframe {
+      @media screen and (max-width: $breakpointPhone) {
+        height: 200px;
+      }
+    }
   }
 }
 

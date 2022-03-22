@@ -9,7 +9,8 @@ const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 function RowPoster({
   movie,
   isFeatured = false,
-  isTV = false,
+  onMouseEnter,
+  onMouseExit,
 }: RowPosterProps) {
   const [isShowingOverview, setIsShowingOverview] = useState(false);
 
@@ -17,11 +18,21 @@ function RowPoster({
     featured: isFeatured,
   });
 
+  const enterOverview = async () => {
+    setIsShowingOverview(true);
+    onMouseEnter && onMouseEnter();
+  };
+
+  const exitOverview = () => {
+    setIsShowingOverview(false);
+    onMouseExit && onMouseExit();
+  };
+
   if (movie.backdrop_path || (isFeatured && movie.poster_path)) {
     return (
       <div
-        onMouseEnter={() => setIsShowingOverview(true)}
-        onMouseLeave={() => setIsShowingOverview(false)}
+        onMouseEnter={enterOverview}
+        onMouseLeave={exitOverview}
         className="row__poster"
       >
         <img
@@ -38,12 +49,13 @@ function RowPoster({
 
   return (
     <div
-      onMouseEnter={() => setIsShowingOverview(true)}
-      onMouseLeave={() => setIsShowingOverview(false)}
+      onMouseEnter={enterOverview}
+      onMouseLeave={exitOverview}
       className="row__poster no-poster"
     >
       <p className="row__poster__title">{getMovieOrTVName(movie)}</p>
       <RowPosterOverlay movie={movie} isShowingOverview={isShowingOverview} />
+      {/* <Trailer /> */}
     </div>
   );
 }
@@ -52,6 +64,8 @@ export interface RowPosterProps {
   movie: MovieResult | TVResult;
   isFeatured?: boolean;
   isTV?: boolean;
+  onMouseEnter?: () => any;
+  onMouseExit?: () => any;
 }
 
 export default RowPoster;
